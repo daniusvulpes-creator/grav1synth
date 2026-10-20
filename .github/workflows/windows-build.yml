@@ -31,7 +31,8 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force dist
           Copy-Item target/release/grav1synth.exe dist/
-          Compress-Archive -Path dist/grav1synth.exe -DestinationPath grav1synth-windows-x64.zip
+          Copy-Item "$env:VCPKG_INSTALLATION_ROOT\installed\x64-windows\bin\*.dll" dist/ -ErrorAction Stop
+          Compress-Archive -Path dist/* -DestinationPath grav1synth-windows-x64.zip
 
       - name: Upload executable
         uses: actions/upload-artifact@v4
